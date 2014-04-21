@@ -1,6 +1,5 @@
 require 'sinatra'
-require 'data_mapper'
-require 'dm_mysql_adapter'
+require './dmconfig'
 
 
 class MapGruffBackend < Sinatra::Base
