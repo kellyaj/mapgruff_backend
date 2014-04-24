@@ -2,6 +2,7 @@ class Incident
   include DataMapper::Resource
 
   property :id,                   Serial
+  property :city,                 String
   property :primary_type,         String
   property :latitude,             String
   property :longitude,            String
