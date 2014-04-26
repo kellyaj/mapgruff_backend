@@ -7,6 +7,7 @@ class Incident
   property :latitude,             String
   property :longitude,            String
   property :description,          String
+  property :local_identifier,     String
   property :incident_date,        String
   property :location_icon,        String
   property :location_description, String
