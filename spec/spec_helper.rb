@@ -1,3 +1,6 @@
+require 'incident_creator'
+require 'incident_monger'
+
 RSpec.configure do |config|
   DataMapper.setup(:default, 'mysql://root:@localhost/mapgruff_test')
   DataMapper.finalize

@@ -1,4 +1,3 @@
-require 'incident_creator'
 require 'spec_helper'
 
 describe IncidentCreator do

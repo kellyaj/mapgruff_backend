@@ -1,4 +1,3 @@
-require 'incident_monger'
 require 'spec_helper'
 
 describe IncidentMonger do
