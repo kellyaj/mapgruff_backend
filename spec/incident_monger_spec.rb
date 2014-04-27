@@ -35,7 +35,7 @@ describe IncidentMonger do
       "city"                 => "Chicago"
     }
 
-    standardized_incidents = IncidentMonger.standardize!(chicago_config, chicago_incidents)
+    standardized_incidents = IncidentMonger.standardize_incidents(chicago_config, chicago_incidents)
 
     standardized_incidents.count.should == 2
     standardized_incidents.first["primary_type"].should == "Theft"
@@ -78,7 +78,7 @@ describe IncidentMonger do
       "city"                 => "Seattle"
     }
 
-    standardized_incidents = IncidentMonger.standardize!(seattle_config, seattle_incidents)
+    standardized_incidents = IncidentMonger.standardize_incidents(seattle_config, seattle_incidents)
 
     standardized_incidents.count.should == 2
     standardized_incidents.first["primary_type"].should == "Assault"

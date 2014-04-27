@@ -1,6 +1,6 @@
 class IncidentMonger
 
-  def self.standardize!(city_config, parsed_incidents)
+  def self.standardize_incidents(city_config, parsed_incidents)
     standardized_incidents = []
     parsed_incidents.each do |incident|
       standardized_incidents << {
