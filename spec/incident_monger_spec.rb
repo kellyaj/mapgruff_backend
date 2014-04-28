@@ -23,18 +23,7 @@ describe IncidentMonger do
       }
     ]
 
-    chicago_config = {
-      "primary_type"         => "primary_type",
-      "latitude"             => "latitude",
-      "longitude"            => "longitude",
-      "date"                 => "date",
-      "local_identifier"     => "case_number",
-      "description"          => "description",
-      "location_description" => "location_description",
-      "city"                 => "Chicago"
-    }
-
-    standardized_incidents = IncidentMonger.standardize_incidents(chicago_config, chicago_incidents)
+    standardized_incidents = IncidentMonger.standardize_incidents(IncidentMonger.chicago_config, chicago_incidents)
 
     standardized_incidents.count.should == 2
     standardized_incidents.first["primary_type"].should == "Theft"
@@ -66,18 +55,8 @@ describe IncidentMonger do
         "latitude" => "41.880156392500034"
       }
     ]
-    seattle_config = {
-      "primary_type"         => "summarized_offense_description",
-      "latitude"             => "latitude",
-      "longitude"            => "longitude",
-      "date"                 => "occurred_date_or_date_range_start",
-      "local_identifier"     => "general_offense_number",
-      "location_description" => "hundred_block_location",
-      "description"          => "offense_type",
-      "city"                 => "Seattle"
-    }
 
-    standardized_incidents = IncidentMonger.standardize_incidents(seattle_config, seattle_incidents)
+    standardized_incidents = IncidentMonger.standardize_incidents(IncidentMonger.seattle_config, seattle_incidents)
 
     standardized_incidents.count.should == 2
     standardized_incidents.first["primary_type"].should == "Assault"
