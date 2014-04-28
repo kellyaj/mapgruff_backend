@@ -24,18 +24,32 @@ class IncidentMonger
   def self.fetch_chicago_incidents
     raw_incidents = HTTParty.get("https://data.cityofchicago.org/resource/qnmj-8ku6.json?$limit=1000&$offset=0")
     parsed_incidents = JSON.parse(raw_incidents.body)
-    standard_incidents = self.standardize_incidents(CHICAGO_CONFIG, parsed_incidents)
-    p standard_incidents
+    standard_incidents = self.standardize_incidents(self.chicago_config, parsed_incidents)
   end
 
-  CHICAGO_CONFIG = {
-    "primary_type"         => "primary_type",
-    "latitude"             => "latitude",
-    "longitude"            => "longitude",
-    "date"                 => "date",
-    "local_identifier"     => "case_number",
-    "description"          => "description",
-    "location_description" => "location_description",
-    "city"                 => "Chicago"
-  }
+  def self.chicago_config
+    {
+      "primary_type"         => "primary_type",
+      "latitude"             => "latitude",
+      "longitude"            => "longitude",
+      "date"                 => "date",
+      "local_identifier"     => "case_number",
+      "description"          => "description",
+      "location_description" => "location_description",
+      "city"                 => "Chicago"
+    }
+  end
+
+  def self.seattle_config
+    {
+      "primary_type"         => "summarized_offense_description",
+      "latitude"             => "latitude",
+      "longitude"            => "longitude",
+      "date"                 => "occurred_date_or_date_range_start",
+      "local_identifier"     => "general_offense_number",
+      "location_description" => "hundred_block_location",
+      "description"          => "offense_type",
+      "city"                 => "Seattle"
+    }
+  end
 end
