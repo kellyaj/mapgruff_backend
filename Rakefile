@@ -1,7 +1,5 @@
-require 'httparty'
-require 'json'
+require './lib/incident_monger'
 
 task :gather_incidents do
-  raw_incidents = HTTParty.get("https://data.cityofchicago.org/resource/qnmj-8ku6.json?$limit=1000&$offset=0")
-  parsed_incidents = JSON.parse(raw_incidents.body)
+  IncidentMonger.fetch_chicago_incidents
 end
