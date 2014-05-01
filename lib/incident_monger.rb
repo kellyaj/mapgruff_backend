@@ -4,10 +4,9 @@ require 'json'
 class IncidentMonger
 
   def self.standardize_incidents(city_config, parsed_incidents)
-    standardized_incidents = []
-    parsed_incidents.each do |incident|
+    parsed_incidents.inject([]) do |acc, incident|
       # TODO: instead of 0, hit geocoding to determine lat/long based on address
-      standardized_incidents << {
+      acc << {
         "primary_type"         => incident.fetch(city_config["primary_type"]),
         "latitude"             => incident.fetch(city_config["latitude"], 0),
         "longitude"            => incident.fetch(city_config["longitude"], 0),
@@ -18,7 +17,6 @@ class IncidentMonger
         "city"                 => city_config["city"]
       }
     end
-    standardized_incidents
   end
 
   def self.fetch_chicago_incidents
