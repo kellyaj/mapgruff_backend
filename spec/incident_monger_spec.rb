@@ -65,4 +65,15 @@ describe IncidentMonger do
     standardized_incidents.first["local_identifier"].should == "something"
     standardized_incidents.first["city"].should == "Seattle"
   end
+
+  context "Geocoding addresses" do
+    it "converts a raw address into an approximated geocodable string" do
+      raw_address = "007XX N HOMAN AVE"
+      city = "Chicago IL"
+
+      formatted_address = IncidentMonger.format_geocodable_address(raw_address, city)
+
+      formatted_address.should == "700+N+HOMAN+AVE+CHICAGO+IL"
+    end
+  end
 end
