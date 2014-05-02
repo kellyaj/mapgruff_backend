@@ -1,5 +1,6 @@
 require 'httparty'
 require 'json'
+require 'yaml'
 
 class IncidentMonger
 
@@ -8,8 +9,8 @@ class IncidentMonger
       # TODO: instead of 0, hit geocoding to determine lat/long based on address
       acc << {
         "primary_type"         => incident.fetch(city_config["primary_type"]),
-        "latitude"             => incident.fetch(city_config["latitude"], 0),
-        "longitude"            => incident.fetch(city_config["longitude"], 0),
+        "latitude"             => incident.fetch(city_config["latitude"], ""),
+        "longitude"            => incident.fetch(city_config["longitude"], ""),
         "date"                 => incident.fetch(city_config["date"]),
         "local_identifier"     => incident.fetch(city_config["local_identifier"]),
         "description"          => incident.fetch(city_config["description"]),
@@ -19,7 +20,7 @@ class IncidentMonger
     end
   end
 
-  API_KEY = ""
+  API_KEY = YAML.load_file('config/geocode_api.yml')
 
   def self.make_geocode_request(address, city_string)
     base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
@@ -27,6 +28,7 @@ class IncidentMonger
     request_suffix = "&sensor=false&key=#{API_KEY}"
     full_request_url = base_url + address_string + request_suffix
     response = HTTParty.get(full_request_url)
+    p response
     JSON.parse(response.body)
   end
 
