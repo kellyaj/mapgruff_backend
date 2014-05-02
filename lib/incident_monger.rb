@@ -28,7 +28,6 @@ class IncidentMonger
     request_suffix = "&sensor=false&key=#{API_KEY}"
     full_request_url = base_url + address_string + request_suffix
     response = HTTParty.get(full_request_url)
-    p response
     JSON.parse(response.body)
   end
 
