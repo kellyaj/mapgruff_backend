@@ -60,7 +60,7 @@ class IncidentMonger
 
   def self.fetch_seattle_incidents
     p "making request for Seattle incidents..."
-    raw_incidents = HTTParty.get("https://data.seattle.gov/resource/7ais-f98f.json?$limit=1000&$offset=0")
+    raw_incidents = HTTParty.get("https://data.seattle.gov/resource/7ais-f98f.json?$limit=1000&$offset=0&$order=occurred_date_or_date_range_start%20desc")
     p "parsing Seattle incidents..."
     parsed_incidents = JSON.parse(raw_incidents.body)
     p "standardizing Seattle incidents..."
