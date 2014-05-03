@@ -2,8 +2,10 @@ require 'incident_creator'
 require 'incident_monger'
 require 'webmock/rspec'
 
+TEST_DB_SETUP = YAML.load_file('config/test_db_setup.yml')
+
 RSpec.configure do |config|
-  DataMapper.setup(:default, 'mysql://root:@localhost/mapgruff_test')
+  DataMapper.setup(:default, TEST_DB_SETUP)
   DataMapper.finalize
   DataMapper.auto_upgrade!
   [:all, :each].each do |x|
