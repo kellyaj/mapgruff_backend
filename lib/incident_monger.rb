@@ -14,6 +14,7 @@ class IncidentMonger
         "local_identifier"     => incident.fetch(city_config["local_identifier"], ""),
         "description"          => incident.fetch(city_config["description"], ""),
         "location_description" => incident.fetch(city_config["location_description"], ""),
+        "block"                => incident.fetch(city_config["block"], ""),
         "city"                 => city_config["city"]
       }
     end
@@ -37,7 +38,9 @@ class IncidentMonger
   end
 
   def self.assign_locations
+    p "finding locations..."
     unmapped_incidents = Incident.all(:latitude => "")
+    p "found #{unmapped_incidents.count} unmapped incidents"
     unmapped_incidents.each do |incident|
       raw_location_data = self.make_geocode_request(incident.block, incident.city)["results"].first
       incident.latitude = raw_location_data["geometry"]["location"]["lat"]
