@@ -12,6 +12,7 @@ class Incident
   property :location_icon,        String
   property :location_description, String
   property :arrest_status,        String
+  property :block,                String
 
   validates_uniqueness_of :local_identifier
 end

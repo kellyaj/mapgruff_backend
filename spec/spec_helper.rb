@@ -1,5 +1,6 @@
 require 'incident_creator'
 require 'incident_monger'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   DataMapper.setup(:default, 'mysql://root:@localhost/mapgruff_test')

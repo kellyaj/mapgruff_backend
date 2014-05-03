@@ -32,7 +32,7 @@ describe IncidentMonger do
       standardized_incidents.count.should == 2
       standardized_incidents.first["primary_type"].should == "Theft"
       standardized_incidents.first["local_identifier"].should == "something"
-      standardized_incidents.first["city"].should == "Chicago"
+      standardized_incidents.first["city"].should == "Chicago IL"
       standardized_incidents.first["description"].should == "Stolen Property"
       standardized_incidents.first["date"].should == "2014-04-20T05:00:00"
     end
@@ -67,7 +67,30 @@ describe IncidentMonger do
       standardized_incidents.first["description"].should == "beatdown"
       standardized_incidents.first["date"].should == "2014-04-20T05:00:00"
       standardized_incidents.first["local_identifier"].should == "something"
-      standardized_incidents.first["city"].should == "Seattle"
+      standardized_incidents.first["city"].should == "Seattle WA"
+    end
+
+    it 'uses geocoding to save lat/long data for incidents without lat/long' do
+      Incident.create({
+        "local_identifier" => "something_else",
+        "primary_type" => "Theft",
+        "block" => "025XX W 46TH ST",
+        "location_description" => "Apartment",
+        "date" => "2014-04-21T05:00:00",
+        "description" => "Auto theft",
+        "longitude" => "",
+        "latitude" => "",
+        "city" => "Chicago IL"
+      })
+
+      mocked_response = { "results" => [ "geometry" => { "location" => { "lat" => "1.2345", "lng" => "9.8765" } } ]
+        }.to_json
+      stub_request(:any, "https://maps.googleapis.com/maps/api/geocode/json?address=2500%20W%2046TH%20ST%20CHICAGO%20IL&key=AIzaSyCFFSG8RUsz5JNTIWiqNApxkvJq3E94lE0&sensor=false").to_return(:body => mocked_response, :status => 200, :headers => {})
+
+      IncidentMonger.assign_locations
+
+      Incident.first.latitude.should == "1.2345"
+      Incident.first.longitude.should == "9.8765"
     end
   end
 

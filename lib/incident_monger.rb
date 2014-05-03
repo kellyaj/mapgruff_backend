@@ -37,6 +37,16 @@ class IncidentMonger
     combined_address.gsub(/ /){ |s| '+' }
   end
 
+  def self.assign_locations
+    unmapped_incidents = Incident.all(:latitude => "")
+    unmapped_incidents.each do |incident|
+      raw_location_data = self.make_geocode_request(incident.block, incident.city)["results"].first
+      incident.latitude = raw_location_data["geometry"]["location"]["lat"]
+      incident.longitude = raw_location_data["geometry"]["location"]["lng"]
+      incident.save
+    end
+  end
+
   def self.fetch_chicago_incidents
     # TODO: generalize this to consume configs for different URLs
     # need to figure out how were going to query this shit
@@ -54,7 +64,8 @@ class IncidentMonger
       "local_identifier"     => "case_number",
       "description"          => "description",
       "location_description" => "location_description",
-      "city"                 => "Chicago"
+      "city"                 => "Chicago IL",
+      "block"                => "block"
     }
   end
 
@@ -67,7 +78,8 @@ class IncidentMonger
       "local_identifier"     => "general_offense_number",
       "location_description" => "hundred_block_location",
       "description"          => "offense_type",
-      "city"                 => "Seattle"
+      "city"                 => "Seattle WA",
+      "block"                => "hundred_block_location"
     }
   end
 end
