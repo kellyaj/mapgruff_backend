@@ -6,7 +6,6 @@ class IncidentMonger
 
   def self.standardize_incidents(city_config, parsed_incidents)
     parsed_incidents.inject([]) do |acc, incident|
-      # TODO: instead of 0, hit geocoding to determine lat/long based on address
       acc << {
         "primary_type"         => incident.fetch(city_config["primary_type"]),
         "latitude"             => incident.fetch(city_config["latitude"], ""),
