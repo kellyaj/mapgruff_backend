@@ -82,10 +82,10 @@ describe IncidentMonger do
         "latitude" => "",
         "city" => "Chicago IL"
       })
-
       mocked_response = { "results" => [ "geometry" => { "location" => { "lat" => "1.2345", "lng" => "9.8765" } } ]
         }.to_json
-      stub_request(:any, "https://maps.googleapis.com/maps/api/geocode/json?address=2500%20W%2046TH%20ST%20CHICAGO%20IL&key=AIzaSyCFFSG8RUsz5JNTIWiqNApxkvJq3E94lE0&sensor=false").to_return(:body => mocked_response, :status => 200, :headers => {})
+      api_key = YAML.load_file('config/geocode_api.yml')
+      stub_request(:any, "https://maps.googleapis.com/maps/api/geocode/json?address=2500%20W%2046TH%20ST%20CHICAGO%20IL&key=#{api_key}&sensor=false").to_return(:body => mocked_response, :status => 200, :headers => {})
 
       IncidentMonger.assign_locations
 
