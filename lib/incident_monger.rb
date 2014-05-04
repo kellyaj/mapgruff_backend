@@ -38,9 +38,7 @@ class IncidentMonger
   end
 
   def self.assign_locations
-    p "finding locations..."
     unmapped_incidents = Incident.all(:latitude => "")
-    p "found #{unmapped_incidents.count} unmapped incidents"
     unmapped_incidents.each do |incident|
       raw_location_data = self.make_geocode_request(incident.block, incident.city)["results"].first
       incident.latitude = raw_location_data["geometry"]["location"]["lat"]
@@ -50,16 +48,12 @@ class IncidentMonger
   end
 
   def self.fetch_chicago_incidents
-    p "making request for Chicago incidents..."
     raw_incidents = HTTParty.get("https://data.cityofchicago.org/resource/qnmj-8ku6.json?$limit=1000&$offset=0")
-    p "parsing Chicago incidents..."
     parsed_incidents = JSON.parse(raw_incidents.body)
-    p "standardizing Chicago incidents..."
     standard_incidents = self.standardize_incidents(self.chicago_config, parsed_incidents)
   end
 
   def self.fetch_seattle_incidents
-    p "making request for Seattle incidents..."
     raw_incidents = HTTParty.get("https://data.seattle.gov/resource/7ais-f98f.json?$limit=1000&$offset=0&$order=occurred_date_or_date_range_start%20desc")
     p "parsing Seattle incidents..."
     parsed_incidents = JSON.parse(raw_incidents.body)
