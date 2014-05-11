@@ -13,4 +13,14 @@ class MapGruffBackend < Sinatra::Base
     seattle_incidents = Incident.all(:city => "Seattle WA")
     seattle_incidents.to_json
   end
+
+  get '/within_coords' do
+    incidents = Incident.all(
+      :longitude.lte => params[:north_long],
+      :longitude.gte => params[:south_long],
+      :latitude.lte => params[:east_lat],
+      :latitude.gte => params[:west_lat]
+    )
+    incidents.to_json
+  end
 end
