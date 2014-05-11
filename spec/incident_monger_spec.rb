@@ -26,7 +26,7 @@ describe IncidentMonger do
       ]
     end
 
-    it 'converts Chicago response data into properly formatted data for Chicago' do
+    it 'converts Chicago response data into properly formatted data' do
       standardized_incidents = IncidentMonger.standardize_incidents(IncidentMonger.chicago_config, @chicago_incidents)
 
       standardized_incidents.count.should == 2
