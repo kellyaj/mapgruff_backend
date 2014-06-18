@@ -13,3 +13,7 @@ end
 task :assign_locations do
   IncidentMonger.assign_locations
 end
+
+task :incident_count do
+  p IncidentMonger.count_incidents
+end

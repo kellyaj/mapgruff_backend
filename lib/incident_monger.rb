@@ -88,4 +88,8 @@ class IncidentMonger
       "block"                => "hundred_block_location"
     }
   end
+
+  def self.count_incidents
+    Incident.all.count
+  end
 end
