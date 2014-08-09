@@ -48,7 +48,7 @@ class IncidentMonger
   end
 
   def self.fetch_chicago_incidents
-    raw_incidents = HTTParty.get("https://data.cityofchicago.org/resource/qnmj-8ku6.json?$limit=1000&$offset=0")
+    raw_incidents = HTTParty.get("https://data.cityofchicago.org/resource/ijzp-q8t2.json?$limit=1000&$offset=0")
     parsed_incidents = JSON.parse(raw_incidents.body)
     standard_incidents = self.standardize_incidents(self.chicago_config, parsed_incidents)
   end
