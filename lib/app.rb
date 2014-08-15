@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'json'
-require './dmconfig'
+require_relative '../dmconfig'
 
 
 class MapGruffBackend < Sinatra::Base

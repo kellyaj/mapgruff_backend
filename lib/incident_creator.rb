@@ -1,4 +1,4 @@
-require './dmconfig'
+require_relative '../dmconfig'
 class IncidentCreator
 
   def self.create_incidents(incident_array)
