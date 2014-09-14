@@ -13,6 +13,7 @@ class Incident
   property :location_description, String
   property :arrest_status,        String
   property :block,                String
+  property :category,             String
 
   validates_uniqueness_of :local_identifier
 end
