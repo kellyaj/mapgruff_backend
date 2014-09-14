@@ -1,5 +1,6 @@
 require 'incident_creator'
 require 'incident_monger'
+require 'chart_formatter'
 require 'webmock/rspec'
 
 TEST_DB_SETUP = YAML.load_file('config/test_db_setup.yml')

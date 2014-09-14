@@ -1,4 +1,5 @@
 require 'sinatra'
+require './lib/chart_formatter'
 require 'json'
 require './dmconfig'
 
@@ -14,6 +15,16 @@ class MapGruffBackend < Sinatra::Base
     response['Access-Control-Allow-Origin'] = "*"
     seattle_incidents = Incident.all(:city => "Seattle WA")
     seattle_incidents.to_json
+  end
+
+  get '/chicago_chart' do
+    response['Access-Control-Allow-Origin'] = "*"
+    ChartFormatter.create_chart_data("Chicago IL").to_json
+  end
+
+  get '/seattle_chart' do
+    response['Access-Control-Allow-Origin'] = "*"
+    ChartFormatter.create_chart_data("Seattle WA").to_json
   end
 
   get '/within_coords' do
