@@ -15,8 +15,17 @@ class IncidentMonger
         "description"          => incident.fetch(city_config["description"], ""),
         "location_description" => incident.fetch(city_config["location_description"], ""),
         "block"                => incident.fetch(city_config["block"], ""),
-        "city"                 => city_config["city"]
+        "city"                 => city_config["city"],
+        "category"             => get_category(city_config["city"], incident.fetch(city_config["primary_type"]))
       }
+    end
+  end
+
+  def self.get_category(city, primary_type)
+    if city == "Chicago IL"
+      chicago_categories.select { |k, v| v.include?(primary_type) }.keys.first
+    else
+      seattle_categories.select { |k, v| v.include?(primary_type) }.keys.first
     end
   end
 
@@ -75,6 +84,47 @@ class IncidentMonger
     }
   end
 
+  def self.chicago_categories
+    {
+      "OTHER" => [
+          "ARSON",
+          "GAMBLING",
+          "INTERFERENCE WITH PUBLIC OFFICE",
+          "LIQUOR LAW VIOLATION",
+          "NARCOTICS",
+          "NON-CRIMINAL",
+          "OFFENSE INVOLVING CHILDREN",
+          "OTHER NARCOTIC VIOLATION",
+          "OTHER OFFENSE",
+          "PROSTITUTION",
+          "PUBLIC PEACE VIOLATION",
+          "WEAPONS VIOLATION"
+      ],
+      "PERSONAL" => [
+        "DECEPTIVE PRACTICE",
+        "INTIMIDATION",
+        "OBSCENITY",
+        "STALKING"
+      ],
+      "PROPERTY" => [
+        "BURGLARY",
+        "CRIMINAL DAMAGE",
+        "CRIMINAL TRESPASS",
+        "MOTOR VEHICLE THEFT",
+        "ROBBERY",
+        "THEFT"
+      ],
+      "VIOLENT" => [
+        "ASSAULT",
+        "BATTERY",
+        "CRIM SEXUAL ASSAULT",
+        "HOMICIDE",
+        "KIDNAPPING",
+        "SEX OFFENSE"
+      ]
+    }
+  end
+
   def self.seattle_config
     {
       "primary_type"         => "summarized_offense_description",
@@ -86,6 +136,74 @@ class IncidentMonger
       "description"          => "offense_type",
       "city"                 => "Seattle WA",
       "block"                => "hundred_block_location"
+    }
+  end
+
+  def self.seattle_categories
+    {
+      "OTHER" => [
+        "ANIMAL COMPLAINT",
+        "COUNTERFEIT",
+        "DUI",
+        "ELUDING",
+        "EMBEZZLE",
+        "FALSE REPORT",
+        "FIREWORK",
+        "FORGERY",
+        "FRAUD",
+        "FRAUD AND FINANCIAL",
+        "GAMBLE",
+        "ILLEGAL DUMPING",
+        "[INC - CASE DC USE ONLY]",
+        "INJURY",
+        "LIQUOR VIOLATION",
+        "LOST PROPERTY",
+        "MAIL THEFT",
+        "NARCOTICS",
+        "OBSTRUCT",
+        "PROPERTY DAMAGE",
+        "PROSTITUTION",
+        "PUBLIC NUISANCE",
+        "RECKLESS BURNING",
+        "RECOVERED PROPERTY",
+        "STAY OUT OF AREA DRUGS",
+        "STAY OUT OF AREA PROSTITUTION",
+        "THEFT OF SERVICES",
+        "TRAFFIC",
+        "TRESPASS",
+        "VIOLATION OF COURT ORDER",
+        "WARRANT ARREST",
+      ],
+      "PERSONAL" => [
+        "BIAS INCIDENT",
+        "DISORDERLY CONDUCT",
+        "DISPUTE",
+        "DISTURBANCE",
+        "EXTORTION",
+        "THREATS",
+      ],
+      "PROPERTY" => [
+        "BIKE THEFT",
+        "Bike Theft",
+        "BURGLARY",
+        "BURGLARY-SECURE-PARKING-RES",
+        "CAR PROWL",
+        "Car Prowl",
+        "PURSE SNATCH",
+        "Purse Snatch",
+        "OTHER PROPERTY",
+        "Other Property",
+        "SHOPLIFTING",
+        "Shoplifting",
+        "STOLEN PROPERTY",
+        "VEHICLE THEFT",
+      ],
+      "VIOLENT" => [
+        "ASSAULT",
+        "HOMICIDE",
+        "ROBBERY",
+        "WEAPON"
+      ]
     }
   end
 

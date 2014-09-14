@@ -37,6 +37,30 @@ describe IncidentMonger do
       standardized_incidents.first["date"].should == "2014-04-20T05:00:00"
     end
 
+    it 'sets a Chicago category based on the primary type' do
+      property_crime = IncidentMonger.get_category("Chicago IL", "BURGLARY")
+      personal_crime = IncidentMonger.get_category("Chicago IL", "STALKING")
+      violent_crime = IncidentMonger.get_category("Chicago IL", "ASSAULT")
+      other_crime = IncidentMonger.get_category("Chicago IL", "NARCOTICS")
+
+      property_crime.should == "PROPERTY"
+      personal_crime.should == "PERSONAL"
+      violent_crime.should == "VIOLENT"
+      other_crime.should == "OTHER"
+    end
+
+    it 'sets a Seattle category based on the primary type' do
+      property_crime = IncidentMonger.get_category("Seattle WA", "PURSE SNATCH")
+      personal_crime = IncidentMonger.get_category("Seattle WA", "THREATS")
+      violent_crime = IncidentMonger.get_category("Seattle WA", "WEAPON")
+      other_crime = IncidentMonger.get_category("Seattle WA", "TRAFFIC")
+
+      property_crime.should == "PROPERTY"
+      personal_crime.should == "PERSONAL"
+      violent_crime.should == "VIOLENT"
+      other_crime.should == "OTHER"
+    end
+
 
     it 'converts Seattle response data into properly formatted data' do
       seattle_incidents = [
