@@ -17,3 +17,14 @@ end
 task :incident_count do
   p IncidentMonger.count_incidents
 end
+
+task :backfill_categories do
+  all_incidents = Incident.all
+
+  all_incidents.each do |incident|
+    if incident.category.nil?
+      incident.category = IncidentMonger.get_category(incident.city, incident.primary_type)
+      incident.save
+    end
+  end
+end
