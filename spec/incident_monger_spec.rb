@@ -37,6 +37,11 @@ describe IncidentMonger do
       standardized_incidents.first["date"].should == "2014-04-20T05:00:00"
     end
 
+    it "selects OTHER category for unknown primary type" do
+      other_crime = IncidentMonger.get_category("Chicago IL", "SOMETHING WEIRD")
+      other_crime.should == "OTHER"
+    end
+
     it 'sets a Chicago category based on the primary type' do
       property_crime = IncidentMonger.get_category("Chicago IL", "BURGLARY")
       personal_crime = IncidentMonger.get_category("Chicago IL", "STALKING")

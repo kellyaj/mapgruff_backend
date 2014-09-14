@@ -23,9 +23,11 @@ class IncidentMonger
 
   def self.get_category(city, primary_type)
     if city == "Chicago IL"
-      chicago_categories.select { |k, v| v.include?(primary_type) }.keys.first
+      category = chicago_categories.select { |k, v| v.include?(primary_type) }.keys.first
+      category.nil? ? "OTHER" : category
     else
-      seattle_categories.select { |k, v| v.include?(primary_type) }.keys.first
+      category = seattle_categories.select { |k, v| v.include?(primary_type) }.keys.first
+      category.nil? ? "OTHER" : category
     end
   end
 
